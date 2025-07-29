@@ -1,170 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>xnx2 — Sexy Video Gallery</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dengue Fever Presentation</title>
   <style>
-    /* Global Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      background: radial-gradient(circle at top, #3f004f, #1a001f);
-      color: #f0f0f0;
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fefefe;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+      background: linear-gradient(135deg, #e6f7ff, #ffffff);
+      text-align: center;
+      animation: slideIn 0.6s ease-in-out;
+      overflow-y: auto;
+    }
+    .slide.active {
+      display: block;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     h1 {
-      font-size: 3rem;
+      color: #006699;
+      margin-bottom: 15px;
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #333;
       margin-bottom: 20px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      color: #ff66cc;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
     }
-    .video-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      width: 100%;
-      max-width: 1200px;
-    }
-    .video-box {
-      position: relative;
-      background: rgba(255,255,255,0.05);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-      transition: transform 0.4s, border-color 0.4s;
-    }
-    .video-box:hover {
-      transform: translateY(-10px) scale(1.02);
-      border-color: #ff66cc;
-    }
-    .thumb {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      filter: brightness(0.7);
-      transition: filter 0.4s;
-    }
-    .video-box:hover .thumb {
-      filter: brightness(1);
-    }
-    video {
-      width: 100%;
+    img, video {
+      max-width: 90%;
+      height: auto;
+      margin: 15px auto;
       display: block;
-      background: #000;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .info {
-      padding: 20px;
-      text-align: center;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-    }
-    .info h2 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-      color: #ffe6f2;
-    }
-    .info p {
-      font-size: 0.95rem;
-      opacity: 0.85;
-    }
-    .skip-ind {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(255, 102, 204, 0.8);
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 1.4rem;
-      color: #fff;
-      display: none;
-      pointer-events: none;
-      text-shadow: 0 0 8px rgba(0,0,0,0.5);
-    }
-    /* Play button overlay */
-    .play-overlay {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 60px; height: 60px;
-      background: rgba(255, 102, 204, 0.8);
-      border-radius: 50%;
+    .controls {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s;
+      justify-content: space-between;
+      padding: 0 30px;
+      z-index: 999;
     }
-    .video-box:hover .play-overlay {
-      opacity: 1;
+    .controls button {
+      background: #007acc;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .play-overlay:before {
-      content: '▶';
-      font-size: 1.8rem;
-      color: #fff;
+    .controls button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
     }
-    @media(max-width: 500px) {
-      h1 { font-size: 2.2rem; }
-      .info h2 { font-size: 1.1rem; }
+    @media (max-width: 768px) {
+      h1 { font-size: 1.5rem; }
+      p { font-size: 1rem; padding: 0 10px; }
     }
   </style>
 </head>
 <body>
-  <h1>xnx2</h1>
-  <div class="video-container" id="videoContainer"></div>
+  <section class="slide active">
+    <h1>Dengue Fever Overview</h1>
+    <p>Dengue is a viral illness caused by four related dengue viruses. It's spread through Aedes mosquito bites and commonly found in tropical and subtropical areas.</p>
+    <img src="https://cdn.pixabay.com/photo/2020/05/05/09/36/mosquito-5136255_960_720.jpg" alt="Aedes Mosquito">
+  </section>  <section class="slide">
+    <h1>Transmission & Breeding</h1>
+    <p>Transmitted by Aedes aegypti mosquitoes. They breed in stagnant water like flower pots, buckets, and old tires. Awareness is crucial to stop breeding sources.</p>
+    <img src="https://cdn.pixabay.com/photo/2021/05/15/08/11/water-6253583_960_720.jpg" alt="Stagnant Water Sources">
+  </section>  <section class="slide">
+    <h1>Symptoms</h1>
+    <p>Symptoms include high fever, headache, eye pain, joint/muscle pain, vomiting, and rash. It appears 3 to 14 days after being bitten.</p>
+    <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+  </section>  <section class="slide">
+    <h1>Severe Dengue</h1>
+    <p>Can lead to hemorrhagic fever—causing bleeding, low platelets, and low blood pressure. It requires urgent medical attention.</p>
+    <img src="https://cdn.pixabay.com/photo/2020/10/29/08/41/doctor-5698542_960_720.jpg" alt="Hospital Care">
+  </section>  <section class="slide">
+    <h1>Treatment Options</h1>
+    <p>No antiviral treatment exists. Rest, fluids, and paracetamol are recommended. Avoid NSAIDs. In serious cases, blood transfusion may be needed.</p>
+    <img src="https://cdn.pixabay.com/photo/2020/04/01/15/59/medicine-4998456_960_720.jpg" alt="Medicine and Fluids">
+  </section>  <section class="slide">
+    <h1>Prevention Tips</h1>
+    <p>Use mosquito nets, wear full-sleeve clothing, apply repellents, and destroy mosquito habitats. Prevention is the best protection.</p>
+    <img src="https://cdn.pixabay.com/photo/2020/08/07/15/53/safety-5470493_960_720.jpg" alt="Mosquito Prevention">
+  </section>  <section class="slide">
+    <h1>Community Awareness</h1>
+    <p>Rainy season increases risk. Stay alert and involved. Community efforts like cleaning water sources and reporting outbreaks help control dengue.</p>
+    <img src="https://cdn.pixabay.com/photo/2018/04/29/17/05/cleaning-3369631_960_720.jpg" alt="Community Cleaning">
+  </section>  <div class="controls">
+    <button id="prevBtn" disabled>Previous</button>
+    <button id="nextBtn">Next</button>
+  </div>  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentIndex = 0;
 
-  <script>
-    const videoLinks = [
-      "https://www.xnxx.tv/video-zop1d12/erotic_body_massage_with_oil",
-      "https://example.com/video2.mp4"
-    ];
-    const container = document.getElementById('videoContainer');
-    videoLinks.forEach(src => {
-      const box = document.createElement('div'); box.className = 'video-box';
-      const thumb = document.createElement('img'); thumb.className = 'thumb'; thumb.alt = 'Thumbnail';
-      box.appendChild(thumb);
-      const playO = document.createElement('div'); playO.className = 'play-overlay'; box.appendChild(playO);
-      const video = document.createElement('video'); video.src = src; video.controls = true; video.setAttribute('playsinline',''); box.appendChild(video);
-      const skip = document.createElement('div'); skip.className = 'skip-ind'; box.appendChild(skip);
-      const info = document.createElement('div'); info.className = 'info';
-      const name = decodeURIComponent(src.split('/').pop().split('?')[0]);
-      info.innerHTML = `<h2>${name.replace(/\.\w+$/, '')}</h2><p>Loading...</p>`;
-      box.appendChild(info);
-      container.appendChild(box);
-      video.addEventListener('loadedmetadata', ()=>{
-        const d = Math.floor(video.duration), mm = String(Math.floor(d/60)).padStart(2,'0'), ss = String(d%60).padStart(2,'0');
-        info.querySelector('p').textContent = `Duration: ${mm}:${ss}`;
+    function updateSlides() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentIndex);
       });
-      video.addEventListener('loadeddata', ()=>{
-        const cvs = document.createElement('canvas'); cvs.width = video.videoWidth; cvs.height = video.videoHeight;
-        cvs.getContext('2d').drawImage(video,0,0,cvs.width,cvs.height);
-        thumb.src = cvs.toDataURL('image/jpeg');
-      });
-      let lastTap = 0;
-      box.addEventListener('click', e => {
-        const now = Date.now(), diff = now - lastTap;
-        if(diff < 300 && diff > 0) {
-          const w = box.getBoundingClientRect().width;
-          if(e.clientX - box.getBoundingClientRect().left < w/2) {
-            video.currentTime = Math.max(0, video.currentTime - 10);
-            skip.textContent = '⏪ 10s';
-          } else {
-            video.currentTime = Math.min(video.duration, video.currentTime + 10);
-            skip.textContent = '10s ⏩';
-          }
-          skip.style.display = 'block'; setTimeout(()=> skip.style.display = 'none', 800);
-        }
-        lastTap = now;
-      });
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === slides.length - 1;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) currentIndex--;
+      updateSlides();
     });
-  </script>
-</body>
-</html>
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < slides.length - 1) currentIndex++;
+      updateSlides();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' && currentIndex < slides.length - 1) {
+        currentIndex++;
+        updateSlides();
+      } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        currentIndex--;
+        updateSlides();
+      }
+    });
+
+    updateSlides();
+  </script></body>
+      </html>

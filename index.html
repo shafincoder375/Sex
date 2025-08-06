@@ -1,137 +1,185 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IELTS Typing Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voice IELTS Typing Test</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #eef2f7; color: #333; margin: 0; padding: 0; }
-    .container { max-width: 700px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    h1, h2, h3 { text-align: center; }
-    label { display: block; margin-top: 1rem; }
-    input, textarea { width: 100%; padding: 0.6rem; margin-top: 0.4rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
-    button { width: 100%; padding: 0.8rem; margin-top: 1.5rem; background: #007BFF; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
-    button:disabled { background: #aaa; }
-    .hidden { display: none; }
-    .results { text-align: center; }
-    #certificate { margin-top: 1rem; padding: 1rem; border: 2px solid #444; border-radius: 10px; background: #f9f9ff; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-family: 'Georgia', serif; }
-    #certificate h3 { color: #2a2a72; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      margin-top: 50px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+    h1 {
+      color: #333;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    .certificate {
+      border: 3px solid #004080;
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #eaf2f8;
+      border-radius: 10px;
+      color: #003366;
+    }
+    .certificate h2 {
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
-  <div class="container" id="form-page">
-    <h1>IELTS Typing Test</h1>
-    <form id="infoForm">
-      <label>Full Name:<input type="text" id="fullName" required></label>
-      <label>Date:<input type="date" id="examDate" required></label>
-      <label>Institution Name:<input type="text" id="institution" required></label>
-      <label>Examiner Number:<input type="text" id="examinerNo" required></label>
-      <label>Candidate Number:<input type="text" id="candidateNo" required></label>
-      <button type="submit">Start Test</button>
-    </form>
-  </div>  <div class="container hidden" id="test-page">
-    <h2>Listen and Type What You Hear</h2>
-    <p><strong>Note:</strong> The audio will play only once. Type carefully.</p>
-    <button id="playBtn">Play Audio</button>
-    <textarea id="userText" rows="6" placeholder="Type what you heard..."></textarea>
-    <button id="submitText">Submit Answer</button>
-  </div>  <div class="container hidden" id="result-page">
-    <div class="results">
-      <h2>Test Completed!</h2>
-      <p>Your Score: <span id="score"></span>%</p>
-      <p>Eligible Countries:</p>
-      <ul id="countries"></ul>
-      <div id="certificate">
-        <h3>IELTS Certificate</h3>
-        <p>Name: <span id="certName"></span></p>
-        <p>Date: <span id="certDate"></span></p>
-        <p>Institution: <span id="certInstitution"></span></p>
-        <p>Examiner No: <span id="certExaminer"></span></p>
-        <p>Candidate No: <span id="certCandidate"></span></p>
-        <p>Score: <span id="certScore"></span>%</p>
-        <button id="downloadCert">Download Certificate</button>
+  <div class="container">
+    <h1>Voice IELTS Typing Test</h1>
+    <div id="form-section">
+      <input type="text" id="name" placeholder="Full Name" />
+      <input type="text" id="date" placeholder="Date (YYYY-MM-DD)" />
+      <input type="text" id="institution" placeholder="Institution Name" />
+      <input type="text" id="examinerId" placeholder="Examiner ID" />
+      <input type="text" id="candidateId" placeholder="Candidate Number" />
+      <button onclick="startTest()">Start Test</button>
+    </div>
+
+    <div id="test-section" class="hidden">
+      <h2>Listen carefully and type what you hear</h2>
+      <textarea id="response" placeholder="Type what you heard here..."></textarea>
+      <button onclick="submitResponse()">Submit</button>
+    </div>
+
+    <div id="result-section" class="hidden">
+      <h2>Your Score: <span id="score"></span>%</h2>
+      <p id="eligibleCountries"></p>
+      <div class="certificate">
+        <h2>Voice IELTS Certificate</h2>
+        <p><strong>Name:</strong> <span id="certName"></span></p>
+        <p><strong>Date:</strong> <span id="certDate"></span></p>
+        <p><strong>Institution:</strong> <span id="certInstitution"></span></p>
+        <p><strong>Examiner ID:</strong> <span id="certExaminer"></span></p>
+        <p><strong>Candidate Number:</strong> <span id="certCandidate"></span></p>
+        <p><strong>IELTS Score:</strong> <span id="certScore"></span>%</p>
       </div>
     </div>
-  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>  <script>
-    const audios = [
+  </div>
+
+  <script>
+    const texts = [
       {
-        topic: "Education",
-        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Replace with your audio
-        transcript: "Education is the most powerful weapon which you can use to change the world."
+        topic: 'Education',
+        text: `Education is one of the most vital pillars of any society. It empowers individuals by giving them knowledge, skills, and the ability to think critically. Through education, people can unlock opportunities that help improve their lives and communities. Quality education fosters innovation, drives economic growth, and reduces inequality. It promotes tolerance and understanding among different cultures. Governments and institutions must prioritize education to ensure a brighter and more equitable future for all citizens. With education, we build a foundation that supports progress and human development on a global scale.`
       },
       {
-        topic: "Environment",
-        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        transcript: "Protecting the environment is vital for future generations to thrive on a healthy planet."
+        topic: 'Environment',
+        text: `The environment is the natural world that surrounds us, including the air we breathe, the water we drink, the forests, oceans, and wildlife. Protecting the environment is essential because it sustains life on Earth. Human activities such as deforestation, pollution, and overconsumption are damaging ecosystems and causing climate change. Climate change leads to rising temperatures, extreme weather events, and loss of biodiversity. To preserve the environment, individuals and governments must adopt sustainable practices such as reducing waste, conserving energy, and protecting natural habitats. A healthy environment is crucial for the survival of future generations and the well-being of all living creatures.`
+      },
+      {
+        topic: 'Technology',
+        text: `Technology has revolutionized the way humans live, communicate, and work. Innovations in computers, the internet, and mobile devices have connected the world in unprecedented ways. Technology enhances productivity, creates new job opportunities, and provides access to information and education. However, it also presents challenges such as data privacy, cybercrime, and social isolation. The rapid advancement of artificial intelligence and automation will continue to reshape industries and societies. It is important to use technology responsibly to maximize its benefits while minimizing negative impacts. Embracing technology thoughtfully can lead to a better quality of life and new possibilities for future generations.`
+      },
+      {
+        topic: 'Health',
+        text: `Good health is fundamental to living a happy and productive life. Maintaining health requires a balanced diet, regular physical activity, and adequate rest. Mental health is equally important and involves managing stress, emotions, and relationships effectively. Preventive healthcare, including vaccinations and regular medical check-ups, helps avoid many diseases. Public health systems play a key role in promoting wellness and controlling outbreaks of infectious diseases. Lifestyle choices such as avoiding smoking and excessive alcohol consumption also contribute to better health. Prioritizing health enables individuals to fulfill their potential and contributes to the overall prosperity of society.`
+      },
+      {
+        topic: 'Culture',
+        text: `Culture is the shared set of beliefs, customs, traditions, and values that define a group of people. It influences art, language, religion, food, and social norms. Culture provides a sense of identity and belonging, connecting individuals to their heritage and community. It evolves over time through interaction and exchange with other cultures, promoting diversity and understanding. Preserving cultural heritage is important to maintain the richness of human history and creativity. Cultural activities such as music, dance, and festivals bring people together and strengthen social bonds. Respecting and celebrating cultural differences fosters peaceful coexistence in an increasingly globalized world.`
       }
     ];
 
-    let selected = audios[Math.floor(Math.random() * audios.length)];
-    let hasPlayed = false;
+    let selectedText = null;
 
-    const form = document.getElementById('infoForm');
-    form.examDate.valueAsDate = new Date();
+    function startTest() {
+      const name = document.getElementById('name').value.trim();
+      const date = document.getElementById('date').value.trim();
+      const institution = document.getElementById('institution').value.trim();
+      const examinerId = document.getElementById('examinerId').value.trim();
+      const candidateId = document.getElementById('candidateId').value.trim();
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      document.getElementById('form-page').classList.add('hidden');
-      document.getElementById('test-page').classList.remove('hidden');
-    });
+      if (!name || !date || !institution || !examinerId || !candidateId) {
+        alert('Please fill out all fields');
+        return;
+      }
 
-    document.getElementById('playBtn').addEventListener('click', () => {
-      if (hasPlayed) return alert("You can only play the audio once.");
-      const audio = new Audio(selected.src);
-      audio.play();
-      hasPlayed = true;
-    });
+      selectedText = texts[Math.floor(Math.random() * texts.length)];
 
-    document.getElementById('submitText').addEventListener('click', () => {
-      const userText = document.getElementById('userText').value.trim().toLowerCase();
-      const originalText = selected.transcript.trim().toLowerCase();
-      const score = calculateScore(userText, originalText);
-      showResult(score);
-    });
+      // Hide form, show test
+      document.getElementById('form-section').classList.add('hidden');
+      document.getElementById('test-section').classList.remove('hidden');
 
-    function calculateScore(input, original) {
-      const inputWords = input.split(/\s+/);
-      const originalWords = original.split(/\s+/);
-      let match = 0;
-      originalWords.forEach((word, i) => {
-        if (inputWords[i] === word) match++;
-      });
-      return Math.round((match / originalWords.length) * 100);
+      // Speak the text
+      speak(selectedText.text);
     }
 
-    function showResult(score) {
-      document.getElementById('test-page').classList.add('hidden');
-      document.getElementById('result-page').classList.remove('hidden');
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function submitResponse() {
+      const userInput = document.getElementById('response').value.trim();
+      if (!userInput) {
+        alert('Please type what you heard before submitting.');
+        return;
+      }
+
+      const transcript = selectedText.text;
+      const score = calculateScore(userInput, transcript);
+
+      document.getElementById('test-section').classList.add('hidden');
+      document.getElementById('result-section').classList.remove('hidden');
+
       document.getElementById('score').innerText = score;
-
-      const eligible = ['UK', 'USA', 'Canada', 'Australia'];
-      const level = Math.floor(score / 25);
-      const show = eligible.slice(0, Math.min(level + 1, eligible.length));
-      document.getElementById('countries').innerHTML = show.map(c => `<li>${c}</li>`).join('');
-
-      document.getElementById('certName').innerText = form.fullName.value;
-      document.getElementById('certDate').innerText = form.examDate.value;
-      document.getElementById('certInstitution').innerText = form.institution.value;
-      document.getElementById('certExaminer').innerText = form.examinerNo.value;
-      document.getElementById('certCandidate').innerText = form.candidateNo.value;
+      document.getElementById('certName').innerText = document.getElementById('name').value;
+      document.getElementById('certDate').innerText = document.getElementById('date').value;
+      document.getElementById('certInstitution').innerText = document.getElementById('institution').value;
+      document.getElementById('certExaminer').innerText = document.getElementById('examinerId').value;
+      document.getElementById('certCandidate').innerText = document.getElementById('candidateId').value;
       document.getElementById('certScore').innerText = score;
+      document.getElementById('eligibleCountries').innerText = getEligibleCountries(score);
     }
 
-    document.getElementById('downloadCert').onclick = () => {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(18);
-      doc.text("IELTS Certificate", 20, 20);
-      doc.setFontSize(12);
-      doc.text(`Name: ${form.fullName.value}`, 20, 40);
-      doc.text(`Date: ${form.examDate.value}`, 20, 50);
-      doc.text(`Institution: ${form.institution.value}`, 20, 60);
-      doc.text(`Examiner No: ${form.examinerNo.value}`, 20, 70);
-      doc.text(`Candidate No: ${form.candidateNo.value}`, 20, 80);
-      doc.text(`Score: ${document.getElementById('certScore').innerText}%`, 20, 90);
-      doc.save("IELTS-Certificate.pdf");
+    function calculateScore(userInput, correctText) {
+      const userWords = userInput.toLowerCase().split(/\s+/);
+      const correctWords = correctText.toLowerCase().split(/\s+/);
+      let matchCount = 0;
+      correctWords.forEach((word, i) => {
+        if (userWords[i] === word) {
+          matchCount++;
+        }
+      });
+      return Math.round((matchCount / correctWords.length) * 100);
     }
-  </script></body>
-      </html>
+
+    function getEligibleCountries(score) {
+      if (score >= 90) return "You are eligible for UK, USA, Canada, Australia";
+      if (score >= 75) return "You are eligible for Canada, Australia";
+      if (score >= 50) return "You are eligible for Malaysia, Germany";
+      return "No eligible countries for this score.";
+    }
+  </script>
+</body>
+</html>

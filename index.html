@@ -2,151 +2,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dengue Fever Presentation</title>
+  <title>IELTS Typing Test</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fefefe;
-      overflow: hidden;
-    }
-    .slide {
-      display: none;
-      width: 100vw;
-      height: 100vh;
-      padding: 20px;
-      background: linear-gradient(135deg, #e6f7ff, #ffffff);
-      text-align: center;
-      animation: slideIn 0.6s ease-in-out;
-      overflow-y: auto;
-    }
-    .slide.active {
-      display: block;
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    h1 {
-      color: #006699;
-      margin-bottom: 15px;
-      font-size: 2rem;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #333;
-      margin-bottom: 20px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-    img, video {
-      max-width: 90%;
-      height: auto;
-      margin: 15px auto;
-      display: block;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .controls {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 30px;
-      z-index: 999;
-    }
-    .controls button {
-      background: #007acc;
-      border: none;
-      color: white;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .controls button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    @media (max-width: 768px) {
-      h1 { font-size: 1.5rem; }
-      p { font-size: 1rem; padding: 0 10px; }
-    }
+    body { font-family: Arial, sans-serif; background: #eef2f7; color: #333; margin: 0; padding: 0; }
+    .container { max-width: 700px; margin: 2rem auto; background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1, h2, h3 { text-align: center; }
+    label { display: block; margin-top: 1rem; }
+    input, textarea { width: 100%; padding: 0.6rem; margin-top: 0.4rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+    button { width: 100%; padding: 0.8rem; margin-top: 1.5rem; background: #007BFF; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    button:disabled { background: #aaa; }
+    .hidden { display: none; }
+    .results { text-align: center; }
+    #certificate { margin-top: 1rem; padding: 1rem; border: 2px solid #444; border-radius: 10px; background: #f9f9ff; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-family: 'Georgia', serif; }
+    #certificate h3 { color: #2a2a72; }
   </style>
 </head>
 <body>
-  <section class="slide active">
-    <h1>Dengue Fever Overview</h1>
-    <p>Dengue is a viral illness caused by four related dengue viruses. It's spread through Aedes mosquito bites and commonly found in tropical and subtropical areas.</p>
-    <img src="https://cdn.pixabay.com/photo/2020/05/05/09/36/mosquito-5136255_960_720.jpg" alt="Aedes Mosquito">
-  </section>  <section class="slide">
-    <h1>Transmission & Breeding</h1>
-    <p>Transmitted by Aedes aegypti mosquitoes. They breed in stagnant water like flower pots, buckets, and old tires. Awareness is crucial to stop breeding sources.</p>
-    <img src="https://cdn.pixabay.com/photo/2021/05/15/08/11/water-6253583_960_720.jpg" alt="Stagnant Water Sources">
-  </section>  <section class="slide">
-    <h1>Symptoms</h1>
-    <p>Symptoms include high fever, headache, eye pain, joint/muscle pain, vomiting, and rash. It appears 3 to 14 days after being bitten.</p>
-    <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
-  </section>  <section class="slide">
-    <h1>Severe Dengue</h1>
-    <p>Can lead to hemorrhagic fever—causing bleeding, low platelets, and low blood pressure. It requires urgent medical attention.</p>
-    <img src="https://cdn.pixabay.com/photo/2020/10/29/08/41/doctor-5698542_960_720.jpg" alt="Hospital Care">
-  </section>  <section class="slide">
-    <h1>Treatment Options</h1>
-    <p>No antiviral treatment exists. Rest, fluids, and paracetamol are recommended. Avoid NSAIDs. In serious cases, blood transfusion may be needed.</p>
-    <img src="https://cdn.pixabay.com/photo/2020/04/01/15/59/medicine-4998456_960_720.jpg" alt="Medicine and Fluids">
-  </section>  <section class="slide">
-    <h1>Prevention Tips</h1>
-    <p>Use mosquito nets, wear full-sleeve clothing, apply repellents, and destroy mosquito habitats. Prevention is the best protection.</p>
-    <img src="https://cdn.pixabay.com/photo/2020/08/07/15/53/safety-5470493_960_720.jpg" alt="Mosquito Prevention">
-  </section>  <section class="slide">
-    <h1>Community Awareness</h1>
-    <p>Rainy season increases risk. Stay alert and involved. Community efforts like cleaning water sources and reporting outbreaks help control dengue.</p>
-    <img src="https://cdn.pixabay.com/photo/2018/04/29/17/05/cleaning-3369631_960_720.jpg" alt="Community Cleaning">
-  </section>  <div class="controls">
-    <button id="prevBtn" disabled>Previous</button>
-    <button id="nextBtn">Next</button>
-  </div>  <script>
-    const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let currentIndex = 0;
+  <div class="container" id="form-page">
+    <h1>IELTS Typing Test</h1>
+    <form id="infoForm">
+      <label>Full Name:<input type="text" id="fullName" required></label>
+      <label>Date:<input type="date" id="examDate" required></label>
+      <label>Institution Name:<input type="text" id="institution" required></label>
+      <label>Examiner Number:<input type="text" id="examinerNo" required></label>
+      <label>Candidate Number:<input type="text" id="candidateNo" required></label>
+      <button type="submit">Start Test</button>
+    </form>
+  </div>  <div class="container hidden" id="test-page">
+    <h2>Listen and Type What You Hear</h2>
+    <p><strong>Note:</strong> The audio will play only once. Type carefully.</p>
+    <button id="playBtn">Play Audio</button>
+    <textarea id="userText" rows="6" placeholder="Type what you heard..."></textarea>
+    <button id="submitText">Submit Answer</button>
+  </div>  <div class="container hidden" id="result-page">
+    <div class="results">
+      <h2>Test Completed!</h2>
+      <p>Your Score: <span id="score"></span>%</p>
+      <p>Eligible Countries:</p>
+      <ul id="countries"></ul>
+      <div id="certificate">
+        <h3>IELTS Certificate</h3>
+        <p>Name: <span id="certName"></span></p>
+        <p>Date: <span id="certDate"></span></p>
+        <p>Institution: <span id="certInstitution"></span></p>
+        <p>Examiner No: <span id="certExaminer"></span></p>
+        <p>Candidate No: <span id="certCandidate"></span></p>
+        <p>Score: <span id="certScore"></span>%</p>
+        <button id="downloadCert">Download Certificate</button>
+      </div>
+    </div>
+  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>  <script>
+    const audios = [
+      {
+        topic: "Education",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Replace with your audio
+        transcript: "Education is the most powerful weapon which you can use to change the world."
+      },
+      {
+        topic: "Environment",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        transcript: "Protecting the environment is vital for future generations to thrive on a healthy planet."
+      }
+    ];
 
-    function updateSlides() {
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentIndex);
+    let selected = audios[Math.floor(Math.random() * audios.length)];
+    let hasPlayed = false;
+
+    const form = document.getElementById('infoForm');
+    form.examDate.valueAsDate = new Date();
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('form-page').classList.add('hidden');
+      document.getElementById('test-page').classList.remove('hidden');
+    });
+
+    document.getElementById('playBtn').addEventListener('click', () => {
+      if (hasPlayed) return alert("You can only play the audio once.");
+      const audio = new Audio(selected.src);
+      audio.play();
+      hasPlayed = true;
+    });
+
+    document.getElementById('submitText').addEventListener('click', () => {
+      const userText = document.getElementById('userText').value.trim().toLowerCase();
+      const originalText = selected.transcript.trim().toLowerCase();
+      const score = calculateScore(userText, originalText);
+      showResult(score);
+    });
+
+    function calculateScore(input, original) {
+      const inputWords = input.split(/\s+/);
+      const originalWords = original.split(/\s+/);
+      let match = 0;
+      originalWords.forEach((word, i) => {
+        if (inputWords[i] === word) match++;
       });
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === slides.length - 1;
+      return Math.round((match / originalWords.length) * 100);
     }
 
-    prevBtn.addEventListener('click', () => {
-      if (currentIndex > 0) currentIndex--;
-      updateSlides();
-    });
+    function showResult(score) {
+      document.getElementById('test-page').classList.add('hidden');
+      document.getElementById('result-page').classList.remove('hidden');
+      document.getElementById('score').innerText = score;
 
-    nextBtn.addEventListener('click', () => {
-      if (currentIndex < slides.length - 1) currentIndex++;
-      updateSlides();
-    });
+      const eligible = ['UK', 'USA', 'Canada', 'Australia'];
+      const level = Math.floor(score / 25);
+      const show = eligible.slice(0, Math.min(level + 1, eligible.length));
+      document.getElementById('countries').innerHTML = show.map(c => `<li>${c}</li>`).join('');
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' && currentIndex < slides.length - 1) {
-        currentIndex++;
-        updateSlides();
-      } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
-        currentIndex--;
-        updateSlides();
-      }
-    });
+      document.getElementById('certName').innerText = form.fullName.value;
+      document.getElementById('certDate').innerText = form.examDate.value;
+      document.getElementById('certInstitution').innerText = form.institution.value;
+      document.getElementById('certExaminer').innerText = form.examinerNo.value;
+      document.getElementById('certCandidate').innerText = form.candidateNo.value;
+      document.getElementById('certScore').innerText = score;
+    }
 
-    updateSlides();
+    document.getElementById('downloadCert').onclick = () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text("IELTS Certificate", 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Name: ${form.fullName.value}`, 20, 40);
+      doc.text(`Date: ${form.examDate.value}`, 20, 50);
+      doc.text(`Institution: ${form.institution.value}`, 20, 60);
+      doc.text(`Examiner No: ${form.examinerNo.value}`, 20, 70);
+      doc.text(`Candidate No: ${form.candidateNo.value}`, 20, 80);
+      doc.text(`Score: ${document.getElementById('certScore').innerText}%`, 20, 90);
+      doc.save("IELTS-Certificate.pdf");
+    }
   </script></body>
       </html>

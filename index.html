@@ -1,185 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Voice IELTS Typing Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice IELTS Testing</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f5f7fa;
     }
-    .container {
-      max-width: 700px;
-      margin: auto;
+    .form-section, .test-section, .certificate-section {
+      margin-bottom: 30px;
       background: white;
       padding: 20px;
-      margin-top: 50px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    h1 {
-      color: #333;
-    }
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    label, input {
+      display: block;
+      margin-bottom: 10px;
     }
     button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
       background-color: #007bff;
       color: white;
       border: none;
-      cursor: pointer;
+      border-radius: 5px;
     }
-    .hidden {
-      display: none;
-    }
-    .certificate {
-      border: 3px solid #004080;
-      padding: 20px;
-      margin-top: 20px;
-      background-color: #eaf2f8;
-      border-radius: 10px;
-      color: #003366;
-    }
-    .certificate h2 {
-      margin-bottom: 5px;
+    button:disabled {
+      background-color: gray;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Voice IELTS Typing Test</h1>
-    <div id="form-section">
-      <input type="text" id="name" placeholder="Full Name" />
-      <input type="text" id="date" placeholder="Date (YYYY-MM-DD)" />
-      <input type="text" id="institution" placeholder="Institution Name" />
-      <input type="text" id="examinerId" placeholder="Examiner ID" />
-      <input type="text" id="candidateId" placeholder="Candidate Number" />
-      <button onclick="startTest()">Start Test</button>
-    </div>
-
-    <div id="test-section" class="hidden">
-      <h2>Listen carefully and type what you hear</h2>
-      <textarea id="response" placeholder="Type what you heard here..."></textarea>
-      <button onclick="submitResponse()">Submit</button>
-    </div>
-
-    <div id="result-section" class="hidden">
-      <h2>Your Score: <span id="score"></span>%</h2>
-      <p id="eligibleCountries"></p>
-      <div class="certificate">
-        <h2>Voice IELTS Certificate</h2>
-        <p><strong>Name:</strong> <span id="certName"></span></p>
-        <p><strong>Date:</strong> <span id="certDate"></span></p>
-        <p><strong>Institution:</strong> <span id="certInstitution"></span></p>
-        <p><strong>Examiner ID:</strong> <span id="certExaminer"></span></p>
-        <p><strong>Candidate Number:</strong> <span id="certCandidate"></span></p>
-        <p><strong>IELTS Score:</strong> <span id="certScore"></span>%</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const texts = [
+  <div class="form-section">
+    <h2>IELTS Test Registration</h2>
+    <label>Full Name: <input type="text" id="fullName" /></label>
+    <label>Date: <input type="date" id="testDate" /></label>
+    <label>Institution Name: <input type="text" id="institution" /></label>
+    <label>Examiner ID: <input type="text" id="examiner" /></label>
+    <label>Candidate Number: <input type="text" id="candidate" /></label>
+    <button onclick="startTest()">Submit & Start Test</button>
+  </div>  <div class="test-section" style="display:none">
+    <h2>Audio Test</h2>
+    <p id="paragraphText"></p>
+    <button id="listenBtn" onclick="playAudioOnce()">🎧 Listen</button>
+    <textarea id="userInput" placeholder="Type what you heard here..." rows="6" cols="50"></textarea>
+    <button onclick="evaluateAnswer()">Submit Answer</button>
+  </div>  <div class="certificate-section" style="display:none">
+    <h2>Congratulations!</h2>
+    <p>You completed the test.</p>
+    <p>Score: <span id="score"></span>%</p>
+    <p>Recommended Countries: <span id="countries"></span></p>
+    <pre id="certificateText"></pre>
+    <button onclick="downloadCertificate()">📥 Download Certificate</button>
+  </div>  <script>
+    const paragraphs = [
       {
-        topic: 'Education',
-        text: `Education is one of the most vital pillars of any society. It empowers individuals by giving them knowledge, skills, and the ability to think critically. Through education, people can unlock opportunities that help improve their lives and communities. Quality education fosters innovation, drives economic growth, and reduces inequality. It promotes tolerance and understanding among different cultures. Governments and institutions must prioritize education to ensure a brighter and more equitable future for all citizens. With education, we build a foundation that supports progress and human development on a global scale.`
+        topic: "Environment",
+        text: "The environment is facing unprecedented challenges due to human activities. Deforestation, pollution, and climate change are some of the biggest threats that our planet is currently grappling with. Forests are being cut down at alarming rates, reducing biodiversity and altering ecosystems. Pollution, both industrial and domestic, has contaminated our air, water, and soil, making it harder for people and wildlife to survive. Climate change, driven by greenhouse gas emissions, is causing global temperatures to rise, leading to melting ice caps, rising sea levels, and more frequent extreme weather events. It is our collective responsibility to take care of the environment. Simple actions like recycling, conserving energy, planting trees, and reducing the use of plastic can make a big difference. Governments, organizations, and individuals all have a role to play in protecting our planet. The future of our children and the generations to come depends on how we treat the Earth today."
       },
       {
-        topic: 'Environment',
-        text: `The environment is the natural world that surrounds us, including the air we breathe, the water we drink, the forests, oceans, and wildlife. Protecting the environment is essential because it sustains life on Earth. Human activities such as deforestation, pollution, and overconsumption are damaging ecosystems and causing climate change. Climate change leads to rising temperatures, extreme weather events, and loss of biodiversity. To preserve the environment, individuals and governments must adopt sustainable practices such as reducing waste, conserving energy, and protecting natural habitats. A healthy environment is crucial for the survival of future generations and the well-being of all living creatures.`
+        topic: "Education",
+        text: "Education is one of the most powerful tools for personal and societal development. It opens doors to opportunities, builds confidence, and empowers individuals to achieve their full potential. From early childhood education to advanced university studies, the process of learning is continuous and lifelong. In many parts of the world, access to quality education remains a challenge due to poverty, conflict, or lack of infrastructure. Investing in education is essential for breaking the cycle of poverty and promoting equality. Educated individuals tend to be healthier, earn more, and contribute positively to society. In the modern age, education goes beyond textbooks and classrooms. Digital technologies, online platforms, and virtual classrooms have revolutionized the way we learn. Teachers play a critical role in shaping young minds and inspiring curiosity. Every child, regardless of their background, deserves the chance to learn and grow."
       },
       {
-        topic: 'Technology',
-        text: `Technology has revolutionized the way humans live, communicate, and work. Innovations in computers, the internet, and mobile devices have connected the world in unprecedented ways. Technology enhances productivity, creates new job opportunities, and provides access to information and education. However, it also presents challenges such as data privacy, cybercrime, and social isolation. The rapid advancement of artificial intelligence and automation will continue to reshape industries and societies. It is important to use technology responsibly to maximize its benefits while minimizing negative impacts. Embracing technology thoughtfully can lead to a better quality of life and new possibilities for future generations.`
-      },
-      {
-        topic: 'Health',
-        text: `Good health is fundamental to living a happy and productive life. Maintaining health requires a balanced diet, regular physical activity, and adequate rest. Mental health is equally important and involves managing stress, emotions, and relationships effectively. Preventive healthcare, including vaccinations and regular medical check-ups, helps avoid many diseases. Public health systems play a key role in promoting wellness and controlling outbreaks of infectious diseases. Lifestyle choices such as avoiding smoking and excessive alcohol consumption also contribute to better health. Prioritizing health enables individuals to fulfill their potential and contributes to the overall prosperity of society.`
-      },
-      {
-        topic: 'Culture',
-        text: `Culture is the shared set of beliefs, customs, traditions, and values that define a group of people. It influences art, language, religion, food, and social norms. Culture provides a sense of identity and belonging, connecting individuals to their heritage and community. It evolves over time through interaction and exchange with other cultures, promoting diversity and understanding. Preserving cultural heritage is important to maintain the richness of human history and creativity. Cultural activities such as music, dance, and festivals bring people together and strengthen social bonds. Respecting and celebrating cultural differences fosters peaceful coexistence in an increasingly globalized world.`
+        topic: "Technology",
+        text: "Technology has transformed nearly every aspect of our daily lives. From smartphones to artificial intelligence, modern innovations continue to reshape the way we live, work, and communicate. The internet has made information accessible at our fingertips, enabling real-time communication across the globe. Healthcare has improved through advanced diagnostic tools, telemedicine, and robotic surgeries. Education has expanded with e-learning platforms, making knowledge available to people in remote areas. In the business world, automation and data analysis have streamlined operations and improved efficiency. However, technology also brings challenges. Cybersecurity threats, digital addiction, and job displacement due to automation are pressing issues. As we embrace new technologies, it is important to consider ethical implications and ensure that innovation serves the greater good. Responsible use and inclusive access to technology can lead to a brighter and more connected future."
       }
     ];
 
     let selectedText = null;
-
-    function startTest() {
-      const name = document.getElementById('name').value.trim();
-      const date = document.getElementById('date').value.trim();
-      const institution = document.getElementById('institution').value.trim();
-      const examinerId = document.getElementById('examinerId').value.trim();
-      const candidateId = document.getElementById('candidateId').value.trim();
-
-      if (!name || !date || !institution || !examinerId || !candidateId) {
-        alert('Please fill out all fields');
-        return;
-      }
-
-      selectedText = texts[Math.floor(Math.random() * texts.length)];
-
-      // Hide form, show test
-      document.getElementById('form-section').classList.add('hidden');
-      document.getElementById('test-section').classList.remove('hidden');
-
-      // Speak the text
-      speak(selectedText.text);
-    }
+    let audioPlayed = false;
 
     function speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      window.speechSynthesis.speak(utterance);
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = 'en-US';
+      speech.rate = 0.9;
+      window.speechSynthesis.speak(speech);
     }
 
-    function submitResponse() {
-      const userInput = document.getElementById('response').value.trim();
-      if (!userInput) {
-        alert('Please type what you heard before submitting.');
+    function startTest() {
+      if (!document.getElementById("fullName").value ||
+          !document.getElementById("testDate").value ||
+          !document.getElementById("institution").value ||
+          !document.getElementById("examiner").value ||
+          !document.getElementById("candidate").value) {
+        alert("Please fill in all fields.");
         return;
       }
 
-      const transcript = selectedText.text;
-      const score = calculateScore(userInput, transcript);
-
-      document.getElementById('test-section').classList.add('hidden');
-      document.getElementById('result-section').classList.remove('hidden');
-
-      document.getElementById('score').innerText = score;
-      document.getElementById('certName').innerText = document.getElementById('name').value;
-      document.getElementById('certDate').innerText = document.getElementById('date').value;
-      document.getElementById('certInstitution').innerText = document.getElementById('institution').value;
-      document.getElementById('certExaminer').innerText = document.getElementById('examinerId').value;
-      document.getElementById('certCandidate').innerText = document.getElementById('candidateId').value;
-      document.getElementById('certScore').innerText = score;
-      document.getElementById('eligibleCountries').innerText = getEligibleCountries(score);
+      selectedText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+      document.querySelector(".form-section").style.display = "none";
+      document.querySelector(".test-section").style.display = "block";
+      document.getElementById("paragraphText").innerText = `Topic: ${selectedText.topic}`;
     }
 
-    function calculateScore(userInput, correctText) {
-      const userWords = userInput.toLowerCase().split(/\s+/);
-      const correctWords = correctText.toLowerCase().split(/\s+/);
-      let matchCount = 0;
-      correctWords.forEach((word, i) => {
-        if (userWords[i] === word) {
-          matchCount++;
-        }
-      });
-      return Math.round((matchCount / correctWords.length) * 100);
+    function playAudioOnce() {
+      if (!audioPlayed) {
+        speak(selectedText.text);
+        audioPlayed = true;
+        document.getElementById("listenBtn").disabled = true;
+        document.getElementById("listenBtn").innerText = "✅ Played";
+      }
     }
 
-    function getEligibleCountries(score) {
-      if (score >= 90) return "You are eligible for UK, USA, Canada, Australia";
-      if (score >= 75) return "You are eligible for Canada, Australia";
-      if (score >= 50) return "You are eligible for Malaysia, Germany";
-      return "No eligible countries for this score.";
+    function evaluateAnswer() {
+      const userText = document.getElementById("userInput").value;
+      if (!userText.trim()) {
+        alert("Please type your answer.");
+        return;
+      }
+
+      const original = selectedText.text.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/);
+      const user = userText.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/);
+
+      let correct = 0;
+      for (let word of user) {
+        if (original.includes(word)) correct++;
+      }
+      const score = Math.round((correct / original.length) * 100);
+
+      let countries = "";
+      if (score >= 80) countries = "UK, Canada, Australia";
+      else if (score >= 60) countries = "Germany, France";
+      else if (score >= 40) countries = "Malaysia, Turkey";
+      else countries = "Local programs only";
+
+      document.getElementById("score").innerText = score;
+      document.getElementById("countries").innerText = countries;
+      document.querySelector(".test-section").style.display = "none";
+      document.querySelector(".certificate-section").style.display = "block";
+
+      const cert = `IELTS Voice Testing Certificate\n\nName: ${document.getElementById("fullName").value}\nDate: ${document.getElementById("testDate").value}\nInstitution: ${document.getElementById("institution").value}\nExaminer ID: ${document.getElementById("examiner").value}\nCandidate Number: ${document.getElementById("candidate").value}\nScore: ${score}%\nEligible Countries: ${countries}`;
+
+      document.getElementById("certificateText").innerText = cert;
     }
-  </script>
-</body>
-</html>
+
+    function downloadCertificate() {
+      const text = document.getElementById("certificateText").innerText;
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "IELTS_Certificate.txt";
+      link.click();
+    }
+  </script></body>
+                </html>
